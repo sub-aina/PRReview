@@ -32,47 +32,6 @@ GitHub API posts comments directly on the PR
 ### How do comments appear on the PR?
 **PyGithub** — After Groq generates the review, PyGithub posts the comment on the PR.
 
----
-
-## Tech Stack — All Free
-
-| Tool                          | Role                                         |
-| ----------------------------- | -------------------------------------------- |
-| **FastAPI**                   | Web server — receives webhooks               |
-| **GitHub Webhooks**           | Notifies server on PR open                   |
-| **PyGithub**                  | Posts comments to GitHub API                 |
-| **Groq**                      | LLM inference — runs Llama 3.3 70B           |
-| **ChromaDB**                  | Local vector DB — stores codebase embeddings |
-| **SentenceTransformers**      | `all-MiniLM-L6-v2` embedding model           |
-| **LangChain Text Splitters**  | Chunks source files before indexing          |
-| **Docker**                    | Packages the app into one container          |
-| **GitHub Actions**            | CI/CD — tests + build on every push          |
-| **pytest**                    | Test suite                                   |
-| **ngrok**                     | Exposes local server to GitHub during dev    |
-
----
-
-## Project Structure
-
-```
-PRReviewer/
-├── main.py              ← FastAPI app + webhook endpoint
-├── indexer.py           ← Reads repo, chunks code, stores in ChromaDB
-├── reviewer.py          ← RAG search + Groq LLM call
-├── github_client.py     ← Posts comments to GitHub PR
-├── config.py            ← Env variable loader
-├── tests/
-│   ├── test_webhook.py
-│   ├── test_indexer.py
-│   └── test_reviewer.py
-├── .github/
-│   └── workflows/
-│       └── ci.yml       ← GitHub Actions pipeline (test + docker build)
-├── Dockerfile
-├── docker-compose.yml
-├── requirements.txt
-└── .env                 ← API keys (never committed)
-```
 
 ---
 
